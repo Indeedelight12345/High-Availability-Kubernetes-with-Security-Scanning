@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: trivy-scan
+spec:
+  backoffLimit: 4
+  template:
+    spec:
+      containers:
+        - name: trivy
+          image: aquasec/trivy:latest
+          command:
+            - "trivy"
+            - "image"
+            - "--severity"
+            - "HIGH,CRITICAL"
+            - "--exit-code"
+            - "1"
+            - "--no-progress"
+            - "rukevweubio/myecommerce-app:latest"
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Never
