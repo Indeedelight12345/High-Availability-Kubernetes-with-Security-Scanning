@@ -1,0 +1,46 @@
+replicaCount: 1
+
+image:
+  repository: rukevweubio/bitcointrading-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort      # or ClusterIP / LoadBalancer
+  port: 80
+
+imagePullSecrets:
+  - name: dockerhub-secret  # only if the image is private
+
+podSecurityContext: {}
+securityContext: {}
+
+resources: {}
+
+livenessProbe: {}
+readinessProbe: {}
+volumeMounts: []
+volumes: []
+nodeSelector: {}
+affinity: {}
+tolerations: {}
+
+serviceAccount:
+  create: true
+  name: ""  # leave empty to auto-generate
+
+ingress:
+  enabled: false       # set to true if you want to enable Ingress
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+autoscaling:
+  enabled: false        # set to true if you want HPA
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
